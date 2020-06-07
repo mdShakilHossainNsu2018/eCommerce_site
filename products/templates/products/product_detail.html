@@ -1,0 +1,10 @@
+{{ product.title }}
+<hr>
+{{ product.description }}
+<hr>
+{{ product.price }}
+
+{% if product.image %}
+<img src="{{ product.image.url }}" alt="product photo" >
+
+{% endif %}
