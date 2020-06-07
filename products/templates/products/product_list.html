@@ -1,3 +1,4 @@
 {% for product in product_list %}
-{{ product.title }}
+    <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+    <hr>
 {% endfor %}
