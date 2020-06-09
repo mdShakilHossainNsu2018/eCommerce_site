@@ -1,0 +1,11 @@
+<div class="card" style="width: 18rem;">
+    {% if instance.image %}
+        <img class="card-img-top" src="{{ instance.image.url }}" alt="{{ instance.title }}">
+    {% endif %}
+
+  <div class="card-body">
+      <a href="{{ instance.get_absolute_url }}">
+    <p class="card-title">{{ instance.title }}</p>
+      </a>
+  </div>
+</div>
