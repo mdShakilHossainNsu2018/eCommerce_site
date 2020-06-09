@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 {{ product.title }}
 <hr>
 {{ product.description }}
@@ -8,3 +11,7 @@
 <img src="{{ product.image.url }}" alt="product photo" >
 
 {% endif %}
+
+    {% include 'products/snippets/update-form.html' with product=product cart=cart %}
+
+{% endblock %}

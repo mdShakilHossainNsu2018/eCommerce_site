@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+
+    {% if cart.products.exists %}
+
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product name</th>
+      <th scope="col">price</th>
+    </tr>
+  </thead>
+  <tbody>
+
+        {% for product in cart.products.all %}
+        <tr>
+         <th scope="row">{{ forloop.counter }}</th>
+            <td>{{product.title}} {% include 'products/snippets/update-form.html' %}
+            </td>
+
+        <td>{{ product.price }}</td>
+
+        </tr>
+        {% endfor %}
+
+
+    <tr>
+
+      <td colspan="2"></td>
+
+      <td>subtotal: <b>{{ cart.total }}</b></td>
+    </tr>
+    <tr>
+
+      <td colspan="2"></td>
+      <td> total: <b>{{ cart.total }}</b></td>
+    </tr>
+  </tbody>
+</table>
+
+        {% else %}
+        <h2>No product to show.</h2>
+        {% endif %}
+
+
+    </div>
+
+
+{% endblock %}
