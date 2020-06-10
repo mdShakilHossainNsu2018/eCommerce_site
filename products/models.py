@@ -2,8 +2,8 @@ from django.db import models
 import uuid, os
 
 from django.db.models import Q
-from django.db.models.signals import pre_save, post_save
-from .utils import unique_slug_generator
+from django.db.models.signals import pre_save
+from eCommerce_site.utils import unique_slug_generator
 from django.urls import reverse
 # Create your models here.
 

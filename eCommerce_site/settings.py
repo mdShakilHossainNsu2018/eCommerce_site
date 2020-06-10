@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
+    'accounts',
+    'billing',
     'carts',
     'orders',
     'products',
@@ -128,4 +130,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
+
+LOGOUT_REDIRECT_URL = '/login/'

@@ -65,6 +65,7 @@ m2m_changed.connect(m2m_change_cart_receiver, sender=Cart.products.through)
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     if instance.subtotal > 0:
+        # todo type cast same type in future
         instance.total = instance.subtotal
     else:
         instance.total = 0.00

@@ -18,12 +18,21 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from accounts.views import login_page, register_page
+from django.contrib.auth.views import LogoutView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('products/', include('products.urls')),
-    path('search/', include('search.urls')),
     path('cart/', include('carts.urls')),
+    path('login/', login_page, name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('products/', include('products.urls')),
+    path('register/', register_page, name='register'),
+    path('search/', include('search.urls')),
+
 ]
 
+# todo if in debug mode
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
