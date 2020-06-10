@@ -3,11 +3,36 @@
 {% block content %}
 
     <div class="container">
-    <h1>Check Out</h1>
 
-    <p>Cart total: {{ object.cart.total }}</p>
-    <p>Shipping total: {{ object.shipping_total }}</p>
-    <p>Order total: {{ object.total }}</p>
+        {% if not billing_profile %}
+
+            <div class="row text-center">
+
+                <div class="col-md-6">
+                    login
+
+                    {% include 'accounts/snippets/form.html' with form=login_form next_url=request.build_absolute_uri %}
+                </div>
+
+                <div class="col-md-6">
+                    or
+                    continue as gust...
+                </div>
+
+            </div>
+
+
+
+
+        {% else %}
+            <h1>Check Out</h1>
+
+            <p>Cart total: {{ object.cart.total }}</p>
+            <p>Shipping total: {{ object.shipping_total }}</p>
+            <p>Order total: {{ object.total }}</p>
+
+        {% endif %}
     </div>
+
 
 {% endblock %}

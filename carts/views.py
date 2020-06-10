@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from accounts.forms import LoginForm, GuestForm
+from billing.models import BillingProfile
 from carts.models import Cart
 from orders.models import Order
 from products.models import Product
@@ -41,4 +43,16 @@ def checkout_view(request):
         return redirect('cart:home')
     else:
         order_obj, new_order = Order.objects.get_or_create(cart=cart_obj)
-    return render(request, 'carts/checkout.html', {'object': order_obj})
+
+    user = request.user
+    login_form = LoginForm()
+    guestForm = GuestForm()
+    billing_profile = None
+    if user.is_authenticated:
+        billing_profile = BillingProfile.objects.get_or_create(user=user, email=user.email)
+
+    context = {'object': order_obj,
+               'billing_profile': billing_profile,
+               'login_form': login_form,
+               }
+    return render(request, 'carts/checkout.html', context)
