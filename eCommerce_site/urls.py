@@ -18,9 +18,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from accounts.views import login_page, register_page
+from accounts.views import login_page, register_page, guest_register_page
 from django.contrib.auth.views import LogoutView
 
+from addresses.views import checkout_address_create_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +30,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('products/', include('products.urls')),
     path('register/', register_page, name='register'),
+    path('register/guest', guest_register_page, name='guest_register'),
     path('search/', include('search.urls')),
+    path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'),
 
 ]
 
