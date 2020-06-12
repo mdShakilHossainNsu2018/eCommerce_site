@@ -21,7 +21,7 @@ from django.urls import path, include
 from accounts.views import login_page, register_page, guest_register_page
 from django.contrib.auth.views import LogoutView
 
-from addresses.views import checkout_address_create_view
+from addresses.views import checkout_address_create_view, checkout_address_reuse_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +33,7 @@ urlpatterns = [
     path('register/guest', guest_register_page, name='guest_register'),
     path('search/', include('search.urls')),
     path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'),
+    path('checkout/address/reuse/', checkout_address_reuse_view, name='checkout_address_reuse'),
 
 ]
 
