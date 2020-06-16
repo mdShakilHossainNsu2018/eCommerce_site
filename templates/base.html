@@ -15,5 +15,93 @@
 {% endblock %}
 
 {% include 'base/js.html' %}
+
+<script>
+    $(document).ready(function () {
+        var productForm = $(".form-product-ajax")
+
+        productForm.submit(function (event) {
+            event.preventDefault();
+            var thisForm = $(this)
+            {#var actionEndpoint = thisForm.attr('action');#}
+            var actionEndpoint = thisForm.attr('data-endpoint');
+            var httpMethod = thisForm.attr('method');
+            var formData = thisForm.serialize();
+
+            $.ajax({
+                url: actionEndpoint,
+                method: httpMethod,
+                data: formData,
+
+                success: function (data) {
+                    var submitSpan = thisForm.find('.submit-span');
+                    if (data.added) {
+
+                        submitSpan.html("<button type='submit' class='btn btn-danger'>remove?</button>");
+                    } else {
+                        submitSpan.html('<button type="submit" class="btn btn-primary">add to cart</button>')
+                    }
+
+                    var navCount = $('.nav_cart_count');
+
+                    navCount.text(data.navItemsCount);
+                    var currentPath = window.location.href;
+                    if (currentPath.indexOf('cart') != -1) {
+                        refreshCart();
+                    }
+                },
+
+                error: function (error) {
+                    console.log('error')
+                }
+            });
+
+            function refreshCart() {
+                var cartTable = $('.cart-table');
+                var cartBody = cartTable.find('.cart-body');
+                var productRows = cartBody.find('.cart-product');
+
+                var refreshCartUrl = 'api/';
+                var refreshCartMethod = 'GET';
+                var data = {};
+                var currentPath = window.location.href;
+
+                $.ajax({
+                    url: refreshCartUrl,
+                    method: refreshCartMethod,
+                    data: {},
+                    success: function (data) {
+                        var hiddenCartItemRemoveForm = $(".cart-item-remove-form");
+                        if (data.products.length > 0) {
+                            productRows.html(" ");
+
+                            $.each(data.products, function (index = 1, value) {
+                                index += 1;
+                                var newCartItemRemove = hiddenCartItemRemoveForm.clone();
+                            newCartItemRemove.find(".cart-item-product-id").val(value.id);
+                            newCartItemRemove.css("display", "block");
+                                cartBody.prepend(
+                                    "<th scope=\"row\">" + index + "</th>" + "<td>" + "<a href=" + value.url + ">" + value.name + " </a>  " + newCartItemRemove.html() + " </td><td>" + value.price + "</td>"
+                                )
+                            });
+                            cartBody.find('.cart-subtotal').text(data.subtotal);
+                            cartBody.find('.cart-total').text(data.total);
+                        } else {
+
+                            window.location.href = currentPath;
+                        }
+
+                    },
+                    error: function (errorData) {
+
+                    }
+
+                })
+            }
+
+        })
+    })
+</script>
+
 </body>
 </html>
